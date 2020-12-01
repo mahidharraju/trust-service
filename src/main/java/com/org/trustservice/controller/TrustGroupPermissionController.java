@@ -36,7 +36,7 @@ public class TrustGroupPermissionController {
         TrustGroupUpdateResponseDTO responseDTO = null;
         try {
             if (!isOrganizationDetailsExistsInHeader(request)) {
-                new GenericAPIException("Organization details missing in header");
+                throw new GenericAPIException("Organization details missing in header");
             }
             responseDTO = trustGroupService.getAllTrustGroupsByDepartment(
                     UUID.fromString(request.getHeader(Constants.ORG_COLLAB_HEADER)),

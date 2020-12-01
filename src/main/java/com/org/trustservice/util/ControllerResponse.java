@@ -1,6 +1,5 @@
 package com.org.trustservice.util;
 
-import com.org.trustservice.excpetion.ErrorDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -13,11 +12,11 @@ public class ControllerResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static <ErrorDetails> ResponseEntity<ErrorDetails> getServerErrorResponseEntity(ErrorDetails details) {
+    public static <T> ResponseEntity<T> getServerErrorResponseEntity(T details) {
         return new ResponseEntity<>(details, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public static <ErrorDetails> ResponseEntity<ErrorDetails> getNotFoundResponseEntity(ErrorDetails details) {
-        return new ResponseEntity<ErrorDetails>(details, HttpStatus.NOT_FOUND);
+    public static <T> ResponseEntity<T> getNotFoundResponseEntity(T details) {
+        return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
     }
 }

@@ -47,4 +47,9 @@ public class DepartmentTrustGroupID implements Serializable {
                 tgFlavourId == ((DepartmentTrustGroupID) o).getTgFlavourId() &&
                 orgCollabId == ((DepartmentTrustGroupID) o).getOrgCollabId());
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode() + deptId.hashCode() + tgFlavourId.hashCode() + orgCollabId.hashCode();
+    }
 }

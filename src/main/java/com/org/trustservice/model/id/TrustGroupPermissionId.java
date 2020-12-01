@@ -38,4 +38,9 @@ public class TrustGroupPermissionId implements Serializable {
                 tgFlavourId == ((TrustGroupPermissionId) o).getTgFlavourId() &&
                 trustGroupId == ((TrustGroupPermissionId) o).getTrustGroupId());
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode()+tgFlavourId.hashCode()+trustGroupId.hashCode();
+    }
 }

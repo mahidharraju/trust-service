@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.org.trustservice.excpetion.GenericAPIException;
+import com.org.trustservice.excpetion.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,9 @@ public class TrustGroupService {
 
     @Value("${google.role.owner}")
     private static String owner;
+
+    @Value("${google.role.unknown}")
+    private static String unknown;
 
 
     /**
@@ -156,15 +160,14 @@ public class TrustGroupService {
      */
     public void updateTrustGroups(TrustGroupUpdateDTO requestDTO) {
         final Map<String, Boolean> permissionMap = populatePermissionMap(requestDTO);
-        Optional<TrustGroupFlavour> currentFlavour = trustGroupFlavourRepository.findById(requestDTO.getTrustGroupId());
-        List<TrustGroupPermission> permissionList = currentFlavour.map(
-                flavour -> flavour.getTrustGroupPermissions())
-                .orElseThrow(() -> new GenericAPIException("No Trust group matching ID:" + requestDTO.getTrustGroupId()));
+        TrustGroupFlavour currentFlavour = trustGroupFlavourRepository.findById(
+                requestDTO.getTrustGroupId()).orElseThrow(() -> new ResourceNotFoundException("No TrustGroup With given ID"));
+        List<TrustGroupPermission> permissionList = currentFlavour.getTrustGroupPermissions();
         permissionList.forEach(
                 tgPermission -> {
                     String permissionName = tgPermission.getPermission().getName();
                     if (permissionMap.get(permissionName) != null
-                            && permissionMap.get(permissionName) != tgPermission.getPermission().getPermissionValue()) {
+                            && permissionMap.get(permissionName).equals(tgPermission.getPermission().getPermissionValue())) {
                         tgPermission.setPermission(
                                 permissionRepository.findByNameAndPermissionValue(
                                         tgPermission.getPermission().getName(),
@@ -172,16 +175,16 @@ public class TrustGroupService {
                     }
                 }
         );
-        if (requestDTO.getCanTransferOwnership())
-            currentFlavour.get().setRole(owner);
-        else if (requestDTO.getCanEditSharedDrivesAndFolders())
-            currentFlavour.get().setRole(writer);
-        else if (requestDTO.getCanCommentOnSharedFilesAndFolders())
-            currentFlavour.get().setRole(commenter);
-        else if (requestDTO.getCanViewSharedFilesAndFolders())
-            currentFlavour.get().setRole(reader);
-        else currentFlavour.get().setRole("null");
-        trustGroupFlavourRepository.save(currentFlavour.get());
+        if (Boolean.TRUE.equals(requestDTO.getCanTransferOwnership()))
+            currentFlavour.setRole(owner);
+        else if (Boolean.TRUE.equals(requestDTO.getCanEditSharedDrivesAndFolders()))
+            currentFlavour.setRole(writer);
+        else if (Boolean.TRUE.equals(requestDTO.getCanCommentOnSharedFilesAndFolders()))
+            currentFlavour.setRole(commenter);
+        else if (Boolean.TRUE.equals(requestDTO.getCanViewSharedFilesAndFolders()))
+            currentFlavour.setRole(reader);
+        else currentFlavour.setRole(unknown);
+        trustGroupFlavourRepository.save(currentFlavour);
     }
 
     /**
@@ -202,6 +205,6 @@ public class TrustGroupService {
      * @return
      */
     public String getRoleBasedOnFlavour(UUID trustGroupId) {
-        return trustGroupFlavourRepository.findById(trustGroupId).get().getRole();
+        return trustGroupFlavourRepository.findById(trustGroupId).map(flavour -> flavour.getRole()).orElse(unknown);
     }
 }
