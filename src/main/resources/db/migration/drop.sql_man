@@ -1,0 +1,99 @@
+drop table trustgroup_permissions_def;
+drop table department_trustgroups;
+drop table trustgroup_flavour;
+drop table trustgroup;
+drop table permission;
+drop table department;
+drop table flyway_schema_history;
+
+
+
+
+
+insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '307d4377-cfc0-4128-a594-9e6e739f8b52' , 'e6db836f-8232-41f6-a833-2fa97773bab1' , '60adf973-ebe0-4aaa-87b7-2bb2cd89f904' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '307d4377-cfc0-4128-a594-9e6e739f8b52' , 'e6db836f-8232-41f6-a833-2fa97773bab1' , '4392fffa-a621-4475-9b2b-478b77e48468' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '307d4377-cfc0-4128-a594-9e6e739f8b52' , 'e6db836f-8232-41f6-a833-2fa97773bab1' , 'eb267844-ce40-4cd1-be35-ae8e9037635d' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '307d4377-cfc0-4128-a594-9e6e739f8b52' , 'e6db836f-8232-41f6-a833-2fa97773bab1' , 'a194c525-1d6c-4f67-9954-f2c5c9000d20' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ 
+ 
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , 'b5a056ca-0fad-4ecb-a79e-ca745cef149a' , '98ffd4cd-39a5-45d9-9a7a-2991b11ed92d' , 'f48f387c-2266-406f-bd2f-5ca10435fe14' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , 'b5a056ca-0fad-4ecb-a79e-ca745cef149a' , '98ffd4cd-39a5-45d9-9a7a-2991b11ed92d' , '9ba4cf02-7e7b-4368-b12f-a06d148026e3' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , 'b5a056ca-0fad-4ecb-a79e-ca745cef149a' , '98ffd4cd-39a5-45d9-9a7a-2991b11ed92d' , 'd3de5b5a-2042-477b-87f3-785facf60f98' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , 'b5a056ca-0fad-4ecb-a79e-ca745cef149a' , '98ffd4cd-39a5-45d9-9a7a-2991b11ed92d' , 'ae7a1982-de01-465a-8ef2-673fad555824' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ 
+ 
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '7b1dfadc-9b86-42e2-951d-4ea1035d1acf' , '8e916793-3ddd-4481-a073-80cc09b6712c' , 'f48f387c-2266-406f-bd2f-5ca10435fe14' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '7b1dfadc-9b86-42e2-951d-4ea1035d1acf' , '8e916793-3ddd-4481-a073-80cc09b6712c' , '9ba4cf02-7e7b-4368-b12f-a06d148026e3'  
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '7b1dfadc-9b86-42e2-951d-4ea1035d1acf' , '8e916793-3ddd-4481-a073-80cc09b6712c' , 'd3de5b5a-2042-477b-87f3-785facf60f98' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '7b1dfadc-9b86-42e2-951d-4ea1035d1acf' , '8e916793-3ddd-4481-a073-80cc09b6712c' , 'a194c525-1d6c-4f67-9954-f2c5c9000d20'  
+ , now(),null,null,'ADMIN' , '');
+ 
+ 
+ 
+ 
+  insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '53eb0d56-600e-4191-8be4-c6e1b84dfe96' , '83c0c167-6e1c-40b1-9906-9c6cfba0dad0' , 'f48f387c-2266-406f-bd2f-5ca10435fe14' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '53eb0d56-600e-4191-8be4-c6e1b84dfe96' , '83c0c167-6e1c-40b1-9906-9c6cfba0dad0' , '9ba4cf02-7e7b-4368-b12f-a06d148026e3'  
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '53eb0d56-600e-4191-8be4-c6e1b84dfe96' , '83c0c167-6e1c-40b1-9906-9c6cfba0dad0' , 'eb267844-ce40-4cd1-be35-ae8e9037635d' 
+ , now(),null,null,'ADMIN' , '');
+ 
+ insert into trustgroup_permissions_def values 
+(uuid_generate_v4() , '53eb0d56-600e-4191-8be4-c6e1b84dfe96' , '83c0c167-6e1c-40b1-9906-9c6cfba0dad0' , 'a194c525-1d6c-4f67-9954-f2c5c9000d20'  
+ , now(),null,null,'ADMIN' , '');
+ 
+ 
+ 
+ insert into department_trustgroups values (uuid_generate_v4() ,'7ac4e0b4-c929-4687-abc6-1a33d3172b08' , '307d4377-cfc0-4128-a594-9e6e739f8b52' , 'cd632663-fce9-45e6-9445-a057230b6260',now()
+									 ,null , null , 'ADMIN' , null);
+									 
+  
+  insert into department_trustgroups values(uuid_generate_v4() ,'7ac4e0b4-c929-4687-abc6-1a33d3172b08' , 'b5a056ca-0fad-4ecb-a79e-ca745cef149a' ,  'cd632663-fce9-45e6-9445-a057230b6260',now()
+									 ,null , null , 'ADMIN' , null);
+
+  insert into department_trustgroups values(uuid_generate_v4() ,'7ac4e0b4-c929-4687-abc6-1a33d3172b08' , '7b1dfadc-9b86-42e2-951d-4ea1035d1acf' ,  'cd632663-fce9-45e6-9445-a057230b6260',now()
+									 ,null , null , 'ADMIN' , null);
+
+  insert into department_trustgroups values(uuid_generate_v4() ,'7ac4e0b4-c929-4687-abc6-1a33d3172b08' , '53eb0d56-600e-4191-8be4-c6e1b84dfe96' , 'cd632663-fce9-45e6-9445-a057230b6260', now()
+									 ,null , null , 'ADMIN' , null);
