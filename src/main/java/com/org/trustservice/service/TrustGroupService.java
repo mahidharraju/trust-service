@@ -1,23 +1,11 @@
 package com.org.trustservice.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import com.org.trustservice.excpetion.GenericAPIException;
-import com.org.trustservice.excpetion.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import com.org.trustservice.dto.DepartmentTrustGroupsDTO;
 import com.org.trustservice.dto.TrustGroupDTO;
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
 import com.org.trustservice.excpetion.DatabaseException;
+import com.org.trustservice.excpetion.ResourceNotFoundException;
 import com.org.trustservice.model.DepartmentTrustGroup;
 import com.org.trustservice.model.TrustGroupFlavour;
 import com.org.trustservice.model.TrustGroupPermission;
@@ -25,6 +13,12 @@ import com.org.trustservice.repository.DepartmentTrustGroupRepository;
 import com.org.trustservice.repository.PermissionRepository;
 import com.org.trustservice.repository.TrustGroupFlavourRepository;
 import com.org.trustservice.util.TrustGroupNameComparator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -205,6 +199,6 @@ public class TrustGroupService {
      * @return
      */
     public String getRoleBasedOnFlavour(UUID trustGroupId) {
-        return trustGroupFlavourRepository.findById(trustGroupId).map(flavour -> flavour.getRole()).orElse(unknown);
+        return trustGroupFlavourRepository.findById(trustGroupId).map(TrustGroupFlavour::getRole).orElse(unknown);
     }
 }

@@ -1,28 +1,20 @@
 package com.org.trustservice.controller;
 
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
-
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
 import com.org.trustservice.excpetion.GenericAPIException;
 import com.org.trustservice.service.TrustGroupService;
 import com.org.trustservice.util.Constants;
 import com.org.trustservice.util.ControllerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin
 public class TrustGroupPermissionController {
 
     @Autowired
