@@ -1,12 +1,13 @@
 package com.org.trustservice.util;
 
 import com.org.trustservice.excpetion.ErrorDetails;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@NoArgsConstructor
 public class ControllerResponse {
+
+    private ControllerResponse() {
+    }
 
     public static <T> ResponseEntity<T> getOkResponseEntity(T response) {
         return new ResponseEntity<>(response, HttpStatus.OK);
