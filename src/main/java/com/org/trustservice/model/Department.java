@@ -39,8 +39,6 @@ public class Department {
   private LocalDateTime updatedDate;
   private String createdBy;
   private String updatedBy;
-
-
   @JsonIgnore
   @OneToMany(
       mappedBy = "dept",

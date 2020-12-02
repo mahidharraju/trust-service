@@ -41,7 +41,6 @@ public class Permission {
   private LocalDateTime updatedDate;
   private String createdBy;
   private String updatedBy;
-
   @JsonIgnore
   @OneToMany(mappedBy = "permission", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @Fetch(value = FetchMode.SELECT)

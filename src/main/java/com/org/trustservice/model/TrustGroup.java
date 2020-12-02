@@ -40,7 +40,6 @@ public class TrustGroup {
   private LocalDateTime updatedDate;
   private String createdBy;
   private String updatedBy;
-
   @JsonIgnore
   @OneToMany(mappedBy = "trustGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @Fetch(value = FetchMode.SELECT)
