@@ -1,21 +1,21 @@
 package com.org.trustservice.dto;
 
 import java.util.List;
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class TrustGroupUpdateResponseDTO {
 
-    private UUID id;
-    private String title;
-    List<TrustGroupUpdateDTO> trustGroups;
+  private Long id;
+  private String title;
+  private List<TrustGroupUpdateDTO> trustGroups;
 }

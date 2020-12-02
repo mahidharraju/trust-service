@@ -1,15 +1,15 @@
 package com.org.trustservice.dto;
 
 import java.util.List;
-import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
-
-@Data
+@Setter
+@Getter
 public class DepartmentTrustGroupsDTO {
 
-    private UUID id;
-    private String title;
-    private List<TrustGroupDTO> trustGroups;
+  private Long id;
+  private String title;
+  private List<TrustGroupDTO> trustGroups;
 }
 

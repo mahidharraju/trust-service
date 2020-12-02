@@ -1,19 +1,23 @@
 package com.org.trustservice.excpetion;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class ResourceNotFoundException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
+  public ResourceNotFoundException(final String message) {
+    super(message);
+  }
 
-    public ResourceNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public ResourceNotFoundException(
+      final String message,
+      final Throwable cause) {
+    super(message, cause);
+  }
 }

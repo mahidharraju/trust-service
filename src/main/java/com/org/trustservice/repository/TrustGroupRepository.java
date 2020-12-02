@@ -1,11 +1,8 @@
 package com.org.trustservice.repository;
 
-import java.util.UUID;
-
+import com.org.trustservice.model.TrustGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.org.trustservice.model.TrustGroup;
-
-public interface TrustGroupRepository extends JpaRepository<TrustGroup, UUID> {
+public interface TrustGroupRepository extends JpaRepository<TrustGroup, Long> {
 
 }

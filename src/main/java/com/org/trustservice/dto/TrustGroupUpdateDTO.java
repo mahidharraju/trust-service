@@ -1,28 +1,28 @@
 package com.org.trustservice.dto;
 
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class TrustGroupUpdateDTO implements Comparable<TrustGroupUpdateDTO> {
 
-    private UUID trustGroupId;
-    private String name;
-    private Boolean canViewSharedFilesAndFolders;
-    private Boolean canCommentOnSharedFilesAndFolders;
-    private Boolean canEditSharedDrivesAndFolders;
-    private Boolean canTransferOwnership;
+  private Long trustGroupId;
+  private String name;
+  private Boolean canViewSharedFilesAndFolders;
+  private Boolean canCommentOnSharedFilesAndFolders;
+  private Boolean canEditSharedDrivesAndFolders;
+  private Boolean canTransferOwnership;
 
 
-    @Override
-    public int compareTo(TrustGroupUpdateDTO o) {
-        return name.compareTo(o.getName());
-    }
+  @Override
+  public int compareTo(final TrustGroupUpdateDTO o) {
+    return name.compareTo(o.getName());
+  }
 }

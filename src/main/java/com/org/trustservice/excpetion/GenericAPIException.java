@@ -1,17 +1,20 @@
 package com.org.trustservice.excpetion;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
 @AllArgsConstructor
+@Getter
+@Setter
 public class GenericAPIException extends RuntimeException {
 
-    public GenericAPIException(String message) {
-        super(message);
-    }
+  public GenericAPIException(final String message) {
+    super(message);
+  }
 
-    public GenericAPIException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public GenericAPIException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 }

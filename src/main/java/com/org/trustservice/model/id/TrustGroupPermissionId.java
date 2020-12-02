@@ -5,42 +5,42 @@ import java.util.UUID;
 
 public class TrustGroupPermissionId implements Serializable {
 
-    private static final long serialVersionUID = 5873590346038679311L;
-    private UUID id;
-    private UUID tgFlavourId;
-    private UUID trustGroupId;
+  private static final long serialVersionUID = 5873590346038679311L;
+  private UUID id;
+  private UUID tgFlavourId;
+  private UUID trustGroupId;
 
-    public TrustGroupPermissionId() {
-    }
+  public TrustGroupPermissionId() {
+  }
 
-    public TrustGroupPermissionId(UUID id, UUID tgFlavourId, UUID trustGroupId) {
-        super();
-        this.id = id;
-        this.tgFlavourId = tgFlavourId;
-        this.trustGroupId = trustGroupId;
-    }
+  public TrustGroupPermissionId(final UUID id, final UUID tgFlavourId, final UUID trustGroupId) {
+    super();
+    this.id = id;
+    this.tgFlavourId = tgFlavourId;
+    this.trustGroupId = trustGroupId;
+  }
 
-    public UUID getId() {
-        return id;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public UUID getTgFlavourId() {
-        return tgFlavourId;
-    }
+  public UUID getTgFlavourId() {
+    return tgFlavourId;
+  }
 
-    public UUID getTrustGroupId() {
-        return trustGroupId;
-    }
+  public UUID getTrustGroupId() {
+    return trustGroupId;
+  }
 
-    public boolean equals(Object o) {
-        return ((o instanceof TrustGroupPermissionId) &&
-                id == ((TrustGroupPermissionId) o).getId() &&
-                tgFlavourId == ((TrustGroupPermissionId) o).getTgFlavourId() &&
-                trustGroupId == ((TrustGroupPermissionId) o).getTrustGroupId());
-    }
+  public boolean equals(final Object o) {
+    return ((o instanceof TrustGroupPermissionId)
+        && id == ((TrustGroupPermissionId) o).getId()
+        && tgFlavourId == ((TrustGroupPermissionId) o).getTgFlavourId()
+        && trustGroupId == ((TrustGroupPermissionId) o).getTrustGroupId());
+  }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode()+tgFlavourId.hashCode()+trustGroupId.hashCode();
-    }
+  @Override
+  public int hashCode() {
+    return id.hashCode() + tgFlavourId.hashCode() + trustGroupId.hashCode();
+  }
 }

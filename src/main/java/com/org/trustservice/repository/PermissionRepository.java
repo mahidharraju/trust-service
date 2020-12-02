@@ -1,11 +1,10 @@
 package com.org.trustservice.repository;
 
-import java.util.UUID;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.org.trustservice.model.Permission;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PermissionRepository extends JpaRepository<Permission, UUID> {
+public interface PermissionRepository extends JpaRepository<Permission, Long> {
 
-    public Permission findByNameAndPermissionValue(String name, Boolean value);
+  Optional<Permission> findByNameAndPermissionValue(String name, Boolean value);
 }

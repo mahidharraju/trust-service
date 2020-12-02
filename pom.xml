@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.org.trust-service</groupId>
-    <artifactId>Trust-Service</artifactId>
+    <artifactId>trust-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Trust-Service</name>
     <description>Demo project for Spring Boot</description>

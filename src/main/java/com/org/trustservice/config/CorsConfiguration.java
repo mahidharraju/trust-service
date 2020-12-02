@@ -1,25 +1,21 @@
 package com.org.trustservice.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfiguration {
+public class CorsConfiguration implements WebMvcConfigurer {
 
-    @Value("${allowedOrigins}")
-    private static String allowedOrigins;
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins(allowedOrigins);
-            }
-        };
-    }
+  @Autowired
+  private Environment env;
+
+  @Override
+  public void addCorsMappings(final CorsRegistry registry) {
+    registry.addMapping("/**")
+        .allowedOrigins(env.getProperty("service.security.allowedOrigins"));
+  }
 }

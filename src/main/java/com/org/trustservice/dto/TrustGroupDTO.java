@@ -1,20 +1,20 @@
 package com.org.trustservice.dto;
 
 import java.util.Map;
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class TrustGroupDTO {
 
-    private UUID trustGroupId;
-    private String name;
-    private Map<String, Boolean> permissions;
+  private Long trustGroupId;
+  private String name;
+  private Map<String, Boolean> permissions;
 }
