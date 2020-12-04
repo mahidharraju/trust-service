@@ -1,34 +1,33 @@
 package com.org.trustservice.model.id;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class TrustGroupPermissionId implements Serializable {
 
   private static final long serialVersionUID = 5873590346038679311L;
-  private UUID id;
-  private UUID tgFlavourId;
-  private UUID trustGroupId;
+  private Long id;
+  private Long tgFlavourId;
+  private Long trustGroupId;
 
   public TrustGroupPermissionId() {
   }
 
-  public TrustGroupPermissionId(final UUID id, final UUID tgFlavourId, final UUID trustGroupId) {
+  public TrustGroupPermissionId(final Long id, final Long tgFlavourId, final Long trustGroupId) {
     super();
     this.id = id;
     this.tgFlavourId = tgFlavourId;
     this.trustGroupId = trustGroupId;
   }
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 
-  public UUID getTgFlavourId() {
+  public Long getTgFlavourId() {
     return tgFlavourId;
   }
 
-  public UUID getTrustGroupId() {
+  public Long getTrustGroupId() {
     return trustGroupId;
   }
 

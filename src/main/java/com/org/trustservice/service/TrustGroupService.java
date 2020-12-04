@@ -20,21 +20,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 
 @Service
 public class TrustGroupService implements ITrustGroupService {
 
 
-  private DepartmentTrustGroupRepository departmentTGRepository;
+  private final DepartmentTrustGroupRepository departmentTGRepository;
 
-  private TrustGroupFlavourRepository trustGroupFlavourRepository;
+  private final TrustGroupFlavourRepository trustGroupFlavourRepository;
 
-  private PermissionRepository permissionRepository;
+  private final PermissionRepository permissionRepository;
 
-  private GooglePermissions googlePermissions;
+  private final GooglePermissions googlePermissions;
 
-  private GoogleRoles googleRoles;
+  private final GoogleRoles googleRoles;
 
   public TrustGroupService(final DepartmentTrustGroupRepository departmentTGRepository,
                            final TrustGroupFlavourRepository trustGroupFlavourRepository,
@@ -63,7 +64,7 @@ public class TrustGroupService implements ITrustGroupService {
         departmentTGRepository.findByDeptIdAndOrgCollabId(
             departmentId,
             orgCollabId);
-    if (!departmentTrustGroups.isEmpty() && departmentTrustGroups.get(0).getDept() != null) {
+    if (!CollectionUtils.isEmpty(departmentTrustGroups) && departmentTrustGroups.get(0).getDept() != null) {
       DepartmentTrustGroupsDTO responseDto = buildResponseDTO(departmentTrustGroups);
       return convertResponseDTOToUICompatibleResponse(responseDto);
     } else {
@@ -102,26 +103,32 @@ public class TrustGroupService implements ITrustGroupService {
   private DepartmentTrustGroupsDTO buildResponseDTO(
       final List<DepartmentTrustGroup> departmentTrustGroups) {
     DepartmentTrustGroupsDTO responseDTO = new DepartmentTrustGroupsDTO();
-    List<TrustGroupDTO> trustGroups = departmentTrustGroups.stream().map(deptTg ->
-        TrustGroupDTO
-            .builder()
-            .trustGroupId(deptTg.getTgFlavourId())
-            .name(deptTg.getFlavour().getTrustGroupPermissions().get(0).getTrustGroup().getName())
-            .permissions(getPermissionMap(deptTg.getFlavour().getTrustGroupPermissions()))
-            .build()
-    ).collect(Collectors.toList());
+    List<TrustGroupDTO> trustGroups = departmentTrustGroups.stream().map(TrustGroupService::buildEachTrustGroup).collect(Collectors.toList());
     responseDTO.setTrustGroups(trustGroups);
-    responseDTO.setId(departmentTrustGroups.get(0).getDeptId());
+    responseDTO.setId(departmentTrustGroups.get(0).getDept().getId());
     responseDTO.setTitle(departmentTrustGroups.get(0).getDept().getName());
     return responseDTO;
   }
 
+  private static TrustGroupDTO buildEachTrustGroup(DepartmentTrustGroup departmentTrustGroup) {
+    TrustGroupFlavour flavour = departmentTrustGroup.getFlavour();
+    if (flavour != null && !CollectionUtils.isEmpty(flavour.getTrustGroupPermissions())) {
+      return TrustGroupDTO
+          .builder()
+          .trustGroupId(departmentTrustGroup.getTgFlavourId())
+          .name(flavour.getTrustGroupPermissions().get(0).getTrustGroup().getName())
+          .permissions(getPermissionMap(flavour.getTrustGroupPermissions()))
+          .build();
+    } else {
+      throw new NoDataFoundException("No Trust groups associated to department : " + departmentTrustGroup.getDeptId());
+    }
+  }
 
   /**
    * @param trustGroupPermissions
    * @return
    */
-  private Map<String, Boolean> getPermissionMap(
+  private static Map<String, Boolean> getPermissionMap(
       final List<TrustGroupPermission> trustGroupPermissions) {
     Map<String, Boolean> permissionMap = new HashMap<>();
     for (TrustGroupPermission permission : trustGroupPermissions) {
@@ -144,11 +151,11 @@ public class TrustGroupService implements ITrustGroupService {
         tgPermission -> {
           String permissionName = tgPermission.getPermission().getName();
           if (permissionMap.get(permissionName) != null
-              && permissionMap.get(permissionName).equals(tgPermission.getPermission().getPermissionValue())) {
+              && !permissionMap.get(permissionName).equals(tgPermission.getPermission().getPermissionValue())) {
             tgPermission.setPermission(
                 permissionRepository.findByNameAndPermissionValue(
                     tgPermission.getPermission().getName(),
-                    permissionMap.get(tgPermission.getPermission().getName())).
+                    permissionMap.get(permissionName)).
                     orElseThrow(() -> new ResourceNotFoundException("Unable to update trust group because " +
                         "invalid request data")));
           }

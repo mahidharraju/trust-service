@@ -5,7 +5,6 @@ import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
 import com.org.trustservice.excpetion.GenericAPIException;
 import com.org.trustservice.service.ITrustGroupService;
 import com.org.trustservice.util.Constants;
-import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +17,18 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 public class TrustGroupPermissionController {
 
+  /**
+   * trustGroupService bean.
+   */
   private final ITrustGroupService trustGroupService;
 
-  public TrustGroupPermissionController(final ITrustGroupService trustGroupService) {
+  /**
+   * create a new TrustGroupPermissionController.
+   *
+   * @param trustGroupService the service bean class
+   */
+  public TrustGroupPermissionController(
+      final ITrustGroupService trustGroupService) {
     this.trustGroupService = trustGroupService;
   }
 
@@ -37,7 +45,7 @@ public class TrustGroupPermissionController {
       @PathVariable("departmentId") final Long departmentId,
       final WebRequest request) {
     TrustGroupUpdateResponseDTO responseDto = null;
-    if (!isOrganizationDetailsExistsInHeader(request)) {
+    if (request.getHeader(Constants.ORG_COLLAB_HEADER) == null) {
       throw new GenericAPIException("Organization details missing in header");
     }
     responseDto = trustGroupService.getAllTrustGroupsByDepartment(
@@ -46,9 +54,6 @@ public class TrustGroupPermissionController {
     return ResponseEntity.ok(responseDto);
   }
 
-  private boolean isOrganizationDetailsExistsInHeader(final WebRequest request) {
-    return request.getHeader(Constants.ORG_COLLAB_HEADER) != null;
-  }
 
   /**
    * Update the definition of trust group.
@@ -61,17 +66,24 @@ public class TrustGroupPermissionController {
   @PutMapping("/departments/{departmentId}/trustGroups")
   public ResponseEntity<TrustGroupUpdateDTO> updateTrustGroup(
       @RequestBody final TrustGroupUpdateDTO updateRequest,
-      @PathVariable("departmentId") final UUID departmentId,
+      @PathVariable("departmentId") final Long departmentId,
       final WebRequest request) {
-    if (!isOrganizationDetailsExistsInHeader(request)) {
+    if (request.getHeader(Constants.ORG_COLLAB_HEADER) == null) {
       throw new GenericAPIException("Organization details missing in header");
     }
     trustGroupService.updateTrustGroups(updateRequest);
     return ResponseEntity.ok(updateRequest);
   }
 
+  /**
+   * Gets Role for a trust group.
+   *
+   * @param trustGroupId trust group Identifier
+   * @return Role value.
+   */
   @GetMapping("/trustGroups/{trustGroupId}/role")
-  public ResponseEntity<String> getTrustGroupRole(@PathVariable("trustGroupId") final Long trustGroupId) {
+  public ResponseEntity<String> getTrustGroupRole(
+      @PathVariable("trustGroupId") final Long trustGroupId) {
     String role = trustGroupService.getRoleBasedOnFlavour(trustGroupId);
     return ResponseEntity.ok(role);
   }

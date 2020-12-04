@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "trustgroup_permission_id_seq", initialValue = 1, allocationSize = 100)
+@Builder
 public class TrustGroupPermission {
 
   @Id
