@@ -1,4 +1,4 @@
-package com.org.trustservice.excpetion;
+package com.org.trustservice.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

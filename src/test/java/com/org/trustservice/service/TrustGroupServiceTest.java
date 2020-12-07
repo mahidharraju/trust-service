@@ -2,7 +2,7 @@ package com.org.trustservice.service;
 
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
-import com.org.trustservice.excpetion.NoDataFoundException;
+import com.org.trustservice.exception.NoDataFoundException;
 import com.org.trustservice.model.Department;
 import com.org.trustservice.model.DepartmentTrustGroup;
 import com.org.trustservice.model.GooglePermissions;

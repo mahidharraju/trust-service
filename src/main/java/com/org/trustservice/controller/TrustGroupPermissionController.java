@@ -2,7 +2,7 @@ package com.org.trustservice.controller;
 
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
-import com.org.trustservice.excpetion.GenericAPIException;
+import com.org.trustservice.exception.GenericAPIException;
 import com.org.trustservice.service.ITrustGroupService;
 import com.org.trustservice.util.Constants;
 import org.springframework.http.ResponseEntity;
