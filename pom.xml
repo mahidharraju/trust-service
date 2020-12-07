@@ -108,9 +108,8 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com/org/trustservice/model/*</exclude>
-                        <exclude>com/org/trustservice/model/id/*</exclude>
-                        <exclude>com/org/trustservice/exception/*</exclude>
+                        <exclude>com/org/trustservice/model/**/*</exclude>
+                        <exclude>com/org/trustservice/excpetion/**/*</exclude>
 
                     </excludes>
                 </configuration>
