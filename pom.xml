@@ -107,11 +107,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <systemPropertyVariables>
-                        <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
-                    </systemPropertyVariables>
                     <excludes>
-                        <exclude>com.org.trustservice.model.*</exclude>
+                        <exclude>com/org/trustservice/model/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
