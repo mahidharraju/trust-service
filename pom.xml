@@ -19,6 +19,7 @@
         <sonar.projectKey>mahidharraju_trust-service</sonar.projectKey>
         <sonar.organization>mahidharraju</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.jacoco.reportPath>"${project.basedir}/jacoco/text.exec</sonar.jacoco.reportPath>
     </properties>
 
     <dependencies>
@@ -74,19 +75,24 @@
 
     <build>
         <plugins>
+
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>11</source>  <!-- same as <java.version> -->
-                    <target>11</target>    <!-- same as <java.version> -->
+                    <source>11</source>  &lt;!&ndash; same as <java.version> &ndash;&gt;
+                    <target>11</target>    &lt;!&ndash; same as <java.version> &ndash;&gt;
                 </configuration>
-            </plugin>
-            <plugin>
+            </plugin>-->
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -102,5 +108,7 @@
 
         </plugins>
     </build>
+
+
 
 </project>
