@@ -14,7 +14,4 @@ public class GenericAPIException extends RuntimeException {
     super(message);
   }
 
-  public GenericAPIException(final String message, final Throwable cause) {
-    super(message, cause);
-  }
 }

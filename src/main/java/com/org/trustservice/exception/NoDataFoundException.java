@@ -9,7 +9,4 @@ public class NoDataFoundException extends RuntimeException {
     super(message);
   }
 
-  public NoDataFoundException(final String message, final Throwable cause) {
-    super(message, cause);
-  }
 }

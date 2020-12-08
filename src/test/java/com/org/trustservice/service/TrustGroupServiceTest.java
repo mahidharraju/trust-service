@@ -1,9 +1,9 @@
 package com.org.trustservice.service;
 
+import com.org.trustservice.InputDataCreator;
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
 import com.org.trustservice.exception.NoDataFoundException;
-import com.org.trustservice.model.Department;
 import com.org.trustservice.model.DepartmentTrustGroup;
 import com.org.trustservice.model.GooglePermissions;
 import com.org.trustservice.model.GoogleRoles;
@@ -45,11 +45,21 @@ class TrustGroupServiceTest {
   @InjectMocks
   private TrustGroupService trustGroupService;
 
-  private List<TrustGroupPermission> permissions = new ArrayList<>();
+
+  TrustGroupUpdateDTO requestDTO;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
+    requestDTO = TrustGroupUpdateDTO
+        .builder()
+        .trustGroupId(123L)
+        .canCommentOnSharedFilesAndFolders(false)
+        .canEditSharedDrivesAndFolders(false)
+        .canViewSharedFilesAndFolders(true)
+        .canTransferOwnership(false)
+        .name("TOP 30000")
+        .build();
   }
 
   @Test
@@ -71,55 +81,18 @@ class TrustGroupServiceTest {
 
   @Test
   void testGetAllTrustGroupsByDepartment() {
+    List<DepartmentTrustGroup> trustGroupsOfDepartment = InputDataCreator.getDepartmentTrustGroupData();
     Long orgCollabId = 1234L;
-    Long departmentId = 123L;
-    List<DepartmentTrustGroup> deptTrustGroups = new ArrayList<>();
-    deptTrustGroups = new ArrayList<>();
-    permissions = new ArrayList<>();
-    permissions.add(TrustGroupPermission
-        .builder()
-        .trustGroup(TrustGroup
-            .builder()
-            .name("DO NOT TRUST")
-            .build())
-        .permission(Permission
-            .builder()
-            .name("Can edit and invite collaborators")
-            .permissionValue(false)
-            .build())
-        .build());
-    deptTrustGroups.add(DepartmentTrustGroup
-        .builder()
-        .id(123L)
-        .dept(Department
-            .builder()
-            .id(123L)
-            .name("Sales")
-            .build())
-        .flavour(TrustGroupFlavour
-            .builder()
-            .trustGroupPermissions(permissions)
-            .build())
-        .orgCollabId(1234L)
-        .createdBy("ADMIN")
-        .build());
-    Mockito.when(departmentTGRepository.findByDeptIdAndOrgCollabId(departmentId, orgCollabId)).thenReturn(deptTrustGroups);
+    Long departmentId = 1L;
+    Mockito.when(departmentTGRepository.findByDeptIdAndOrgCollabId(departmentId, orgCollabId)).thenReturn(trustGroupsOfDepartment);
     TrustGroupUpdateResponseDTO response = trustGroupService.getAllTrustGroupsByDepartment(orgCollabId, departmentId);
     Assertions.assertNotNull(response, "success");
   }
 
+
   @Test
   void testUpdateTrustGroups() {
-    TrustGroupUpdateDTO requestDTO = TrustGroupUpdateDTO
-        .builder()
-        .trustGroupId(123L)
-        .canCommentOnSharedFilesAndFolders(false)
-        .canEditSharedDrivesAndFolders(false)
-        .canViewSharedFilesAndFolders(true)
-        .canTransferOwnership(false)
-        .name("TOP 30000")
-        .build();
-    permissions = new ArrayList<>();
+    List<TrustGroupPermission> permissions = new ArrayList<>();
     TrustGroupPermission permission1 = TrustGroupPermission
         .builder()
         .tgFlavourId(1L)
@@ -131,7 +104,7 @@ class TrustGroupServiceTest {
         .permission(Permission
             .builder()
             .name("Can view shared files and folders?")
-            .permissionValue(false)
+            .permissionValue(true)
             .build())
         .build();
     TrustGroupPermission permission2 = TrustGroupPermission
@@ -155,19 +128,24 @@ class TrustGroupServiceTest {
         .id(1L)
         .trustGroupPermissions(permissions)
         .build();
-    Permission p1 = Permission
+    Permission nonEditorPermission = Permission
         .builder()
         .name("Can edit shared drives and folders?")
-        .permissionValue(true)
+        .permissionValue(false)
         .build();
     Mockito.when(googlePermissions.getCommenter()).thenReturn("Can comment on shared files and folders?");
     Mockito.when(googlePermissions.getOwner()).thenReturn("Can transfer ownership?");
     Mockito.when(googlePermissions.getReader()).thenReturn("Can view shared files and folders?");
     Mockito.when(googlePermissions.getWriter()).thenReturn("Can edit shared drives and folders?");
+    Mockito.when(googleRoles.getOwner()).thenReturn("owner");
+    Mockito.when(googleRoles.getCommenter()).thenReturn("commenter");
+    Mockito.when(googleRoles.getReader()).thenReturn("reader");
+    Mockito.when(googleRoles.getWriter()).thenReturn("writer");
     Mockito.when(trustGroupFlavourRepository.findById(requestDTO.getTrustGroupId())).thenReturn(Optional.of(currentFlavour));
-    Mockito.when(permissionRepository.findByNameAndPermissionValue(Mockito.anyString(), Mockito.anyBoolean())).thenReturn(Optional.of(p1));
+    Mockito.when(permissionRepository.findByNameAndPermissionValue("Can edit shared drives and folders?", false)).thenReturn(Optional.of(nonEditorPermission));
     Mockito.when(trustGroupFlavourRepository.save(currentFlavour)).thenReturn(currentFlavour);
-    Assertions.assertDoesNotThrow(() -> trustGroupService.updateTrustGroups(requestDTO));
+    TrustGroupFlavour response = trustGroupService.updateTrustGroups(requestDTO);
+    Assertions.assertEquals("reader", response.getRole());
   }
 
   @Test
@@ -179,6 +157,12 @@ class TrustGroupServiceTest {
         .build();
     Mockito.when(trustGroupFlavourRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(flavour));
     String role = trustGroupService.getRoleBasedOnFlavour(123L);
-    Assertions.assertSame("owner",role);
+    Assertions.assertSame("owner", role);
+  }
+
+  @Test
+  void testNoDataFoundExceptionWithUpdateTrustGroups() {
+    Mockito.when(trustGroupFlavourRepository.findById(requestDTO.getTrustGroupId())).thenReturn(Optional.empty());
+    Assertions.assertThrows(NoDataFoundException.class, () -> trustGroupService.updateTrustGroups(requestDTO));
   }
 }

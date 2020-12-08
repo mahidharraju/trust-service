@@ -2,6 +2,7 @@ package com.org.trustservice.service;
 
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
+import com.org.trustservice.model.TrustGroupFlavour;
 
 public interface ITrustGroupService {
 
@@ -18,8 +19,9 @@ public interface ITrustGroupService {
   /**
    * updates trustgroup.
    * @param requestDTO
+   * @return
    */
-  void updateTrustGroups(TrustGroupUpdateDTO requestDTO);
+  TrustGroupFlavour updateTrustGroups(TrustGroupUpdateDTO requestDTO);
 
   /**
    * returns role assigned to a trust group.

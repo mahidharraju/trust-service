@@ -5,7 +5,6 @@ import com.org.trustservice.dto.TrustGroupDTO;
 import com.org.trustservice.dto.TrustGroupUpdateDTO;
 import com.org.trustservice.dto.TrustGroupUpdateResponseDTO;
 import com.org.trustservice.exception.NoDataFoundException;
-import com.org.trustservice.exception.ResourceNotFoundException;
 import com.org.trustservice.model.DepartmentTrustGroup;
 import com.org.trustservice.model.GooglePermissions;
 import com.org.trustservice.model.GoogleRoles;
@@ -140,12 +139,14 @@ public class TrustGroupService implements ITrustGroupService {
   }
 
   /**
+   *
    * @param requestDTO
+   * @return
    */
-  public void updateTrustGroups(final TrustGroupUpdateDTO requestDTO) {
+  public TrustGroupFlavour updateTrustGroups(final TrustGroupUpdateDTO requestDTO) {
     Map<String, Boolean> permissionMap = populatePermissionMap(requestDTO);
     TrustGroupFlavour currentFlavour = trustGroupFlavourRepository.findById(
-        requestDTO.getTrustGroupId()).orElseThrow(() -> new ResourceNotFoundException("No TrustGroup With given ID"));
+        requestDTO.getTrustGroupId()).orElseThrow(() -> new NoDataFoundException("No TrustGroup With given ID"));
     List<TrustGroupPermission> permissionList = currentFlavour.getTrustGroupPermissions();
     permissionList.forEach(
         tgPermission -> {
@@ -156,7 +157,7 @@ public class TrustGroupService implements ITrustGroupService {
                 permissionRepository.findByNameAndPermissionValue(
                     tgPermission.getPermission().getName(),
                     permissionMap.get(permissionName)).
-                    orElseThrow(() -> new ResourceNotFoundException("Unable to update trust group because " +
+                    orElseThrow(() -> new NoDataFoundException("Unable to update trust group because " +
                         "invalid request data")));
           }
         }
@@ -172,7 +173,7 @@ public class TrustGroupService implements ITrustGroupService {
     } else {
       currentFlavour.setRole(googleRoles.getUnknown());
     }
-    trustGroupFlavourRepository.save(currentFlavour);
+    return trustGroupFlavourRepository.save(currentFlavour);
   }
 
   /**

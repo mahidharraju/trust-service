@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class TrustGroupUpdateDTO implements Comparable<TrustGroupUpdateDTO> {
+public class TrustGroupUpdateDTO {
 
   private Long trustGroupId;
   private String name;
@@ -19,10 +19,4 @@ public class TrustGroupUpdateDTO implements Comparable<TrustGroupUpdateDTO> {
   private Boolean canCommentOnSharedFilesAndFolders;
   private Boolean canEditSharedDrivesAndFolders;
   private Boolean canTransferOwnership;
-
-
-  @Override
-  public int compareTo(final TrustGroupUpdateDTO o) {
-    return name.compareTo(o.getName());
-  }
 }

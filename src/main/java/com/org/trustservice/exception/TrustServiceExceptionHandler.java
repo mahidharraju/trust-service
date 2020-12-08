@@ -10,16 +10,6 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class TrustServiceExceptionHandler {
 
-  @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<ErrorDetails> handleResourceNotFoundException(
-      final ResourceNotFoundException exception,
-      final WebRequest request) {
-    return new ResponseEntity<>(
-        buildErrorDetails(request, exception),
-        HttpStatus.NOT_FOUND);
-  }
-
-
   @ExceptionHandler(GenericAPIException.class)
   public ResponseEntity<ErrorDetails> handleGenericAPIException(
       final Exception exception,
